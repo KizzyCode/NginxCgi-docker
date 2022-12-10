@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  nginx-cgi:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8080/tcp"
+    volumes:
+      - ./example:/mnt:ro
