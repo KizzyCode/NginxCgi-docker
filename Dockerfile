@@ -9,4 +9,7 @@ COPY ./files/nginx.conf /etc/nginx/nginx.conf
 COPY ./files/fastcgi.conf /etc/nginx/fastcgi.conf
 COPY ./files/supervisord.conf /etc/supervisord.conf
 
+RUN mkdir -p /var/sock/www-data \
+    && chown -R www-data /var/sock/www-data
+
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
