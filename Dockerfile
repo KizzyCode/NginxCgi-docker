@@ -1,7 +1,13 @@
-FROM alpine:latest
+FROM debian:stable-slim
 
-RUN apk add --no-cache fcgiwrap nginx shadow supervisor
-RUN adduser -S -H -D -u 1000 -s /sbin/nologin www-data
+ENV DEBIAN_FRONTEND noninteractive
+ENV PACKAGES fcgiwrap nginx supervisor
+RUN apt-get update \
+    && apt-get upgrade --yes \
+    && apt-get install --yes --no-install-recommends ${PACKAGES} \
+    && apt-get autoremove --yes
+
+RUN usermod --uid=1000 www-data
 
 RUN rm -rf /etc/nginx/*
 COPY ./files/mime.types /etc/nginx/mime.types
